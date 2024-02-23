@@ -69,6 +69,16 @@ private:
         return std::sqrt(dx * dx + dy * dy);
     }
 
+    void navigateToNextGoal() {
+        // Example: Set a new goal for the robot
+        geometry_msgs::msg::PoseStamped goal_pose;
+        goal_pose.header.frame_id = "map";
+        goal_pose.pose.position.x = 10.0;
+        goal_pose.pose.position.y = 10.0;
+        goal_pose.pose.orientation.w = 1.0;
+        goal_publisher_->publish(goal_pose);
+    }
+
     void pointcloudCallback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
         // Process point cloud data
         // Implement your perception or mapping logic here
