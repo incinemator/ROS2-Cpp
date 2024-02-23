@@ -40,8 +40,62 @@ private:
     }
 
     void processVisualSLAM() {
-        // Update Visual SLAM state and publish results if needed
-        // Implement your Visual SLAM logic here
+            if (prev_keypoints_.empty() || prev_descriptors_.empty()) {
+                // Initial frame, just store keypoints and descriptors
+                prev_keypoints_ = current_keypoints_;
+                prev_descriptors_ = current_descriptors_;
+                return;
+            }
+
+            // Feature matching
+            std::vector<cv::DMatch> matches;
+            feature_matcher_.match(prev_descriptors_, current_descriptors_, matches);
+
+            // Filter out good matches based on Lowe's ratio test
+            double ratio_thresh = 0.7;
+            std::vector<cv::DMatch> good_matches;
+            for (const auto& match : matches) {
+                if (match.distance < ratio_thresh * match.trainIdx) {
+                    good_matches.push_back(match);
+                }
+            }
+
+            // Estimate the homography matrix using RANSAC
+            std::vector<cv::Point2f> prev_points, current_points;
+            for (const auto& match : good_matches) {
+                prev_points.push_back(prev_keypoints_[match.queryIdx].pt);
+                current_points.push_back(current_keypoints_[match.trainIdx].pt);
+            }
+
+            cv::Mat homography = cv::findHomography(prev_points, current_points, cv::RANSAC);
+
+            // Apply the homography to get the relative transformation
+            cv::Mat translation, rotation;
+            cv::decomposeHomographyMat(homography, cv::Mat::eye(3, 3, CV_64F), translation, rotation, cv::noArray());
+
+            // Update the Visual SLAM state or perform further processing as needed
+
+            // Publish the estimated pose
+            geometry_msgs::msg::PoseWithCovarianceStamped pose_msg;
+            pose_msg.header.stamp = now();
+            pose_msg.pose.pose.position.x = translation.at<double>(0);
+            pose_msg.pose.pose.position.y = translation.at<double>(1);
+            pose_msg.pose.pose.position.z = translation.at<double>(2);
+            // Convert rotation matrix to quaternion
+            cv::Mat rotation_mat;
+            cv::Rodrigues(rotation, rotation_mat);
+            cv::Mat quaternion;
+            cv::Rodrigues(rotation_mat, quaternion);
+            pose_msg.pose.pose.orientation.x = quaternion.at<double>(0);
+            pose_msg.pose.pose.orientation.y = quaternion.at<double>(1);
+            pose_msg.pose.pose.orientation.z = quaternion.at<double>(2);
+            pose_msg.pose.pose.orientation.w = quaternion.at<double>(3);
+            pose_publisher_->publish(pose_msg);
+
+            // Update the previous keypoints and descriptors
+            prev_keypoints_ = current_keypoints_;
+            prev_descriptors_ = current_descriptors_;
+            }
     }
 
     rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr image_subscriber_;
