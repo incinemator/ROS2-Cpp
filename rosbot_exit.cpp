@@ -10,6 +10,7 @@ using namespace std;
 class RosbotGetOut {
     public:
         RosbotGetOut();
+        ~RosbotGetOut();
         void recenter();
         void navigate();
     private:
