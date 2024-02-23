@@ -23,7 +23,7 @@ private:
             cmd_vel.angular.z = 0.0;
             cmd_vel_publisher_->publish(cmd_vel);
         } else {
-            // Example: Move the robot forward
+            // Move the robot forward
             geometry_msgs::msg::Twist cmd_vel;
             cmd_vel.linear.x = 0.2;  // Adjust linear velocity as needed
             cmd_vel.angular.z = 0.0;
