@@ -11,7 +11,9 @@ public:
         image_subscriber_ = create_subscription<sensor_msgs::msg::Image>(
             "/camera/color/image_raw", 10, std::bind(&VisualSLAMNode::imageCallback, this, std::placeholders::_1));
 
-        // Initialize Visual SLAM components here
+        // Initialize Visual SLAM components
+        feature_detector_ = cv::ORB::create();
+        descriptor_extractor_ = cv::ORB::create();
 
         // Start the Visual SLAM processing loop
         timer_ = create_wall_timer(std::chrono::milliseconds(100), std::bind(&VisualSLAMNode::processVisualSLAM, this));
@@ -24,7 +26,8 @@ private:
             cv::Mat image = cv_bridge::toCvCopy(msg, "bgr8")->image;
 
             // Process the image and update Visual SLAM data
-            // Implement your Visual SLAM logic here
+            cv::Ptr<cv::Feature2D> feature_detector_;
+            cv::Ptr<cv::Feature2D> descriptor_extractor_;
         } catch (const cv_bridge::Exception& e) {
             RCLCPP_ERROR(get_logger(), "CV_Bridge exception: %s", e.what());
         }
