@@ -18,7 +18,8 @@ class RosbotGetOut {
         RosbotClass rosbot;
 };
 
-int main()
+int main(int argc, char **argv)
 {
+    ros::init(arc, argv, "rosbot_node");
     return 0;
 }
