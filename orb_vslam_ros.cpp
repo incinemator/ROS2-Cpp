@@ -17,6 +17,10 @@ public:
 
         // Start the Visual SLAM processing loop
         timer_ = create_wall_timer(std::chrono::milliseconds(100), std::bind(&VisualSLAMNode::processVisualSLAM, this));
+
+        // Initialize data structures
+        prev_keypoints_.clear();
+        prev_descriptors_ = cv::Mat();
     }
 
 private:
