@@ -18,3 +18,7 @@ class RosbotGetOut {
         RosbotClass rosbot;
 };
 
+int main()
+{
+    return 0;
+}
