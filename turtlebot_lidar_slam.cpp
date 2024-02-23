@@ -16,7 +16,7 @@ public:
 private:
     void lidarCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
         // SLAM
-        // Example: Stop the robot if an obstacle is detected in front
+        // Stop the robot if an obstacle is detected in front
         if (isObstacleInFront(msg)) {
             geometry_msgs::msg::Twist cmd_vel;
             cmd_vel.linear.x = 0.0;
