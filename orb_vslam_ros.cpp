@@ -31,6 +31,9 @@ private:
             // Process the image and update Visual SLAM data
             cv::Ptr<cv::Feature2D> feature_detector_;
             cv::Ptr<cv::Feature2D> descriptor_extractor_;
+
+            std::vector<cv::KeyPoint> prev_keypoints_;
+            cv::Mat prev_descriptors_;
         } catch (const cv_bridge::Exception& e) {
             RCLCPP_ERROR(get_logger(), "CV_Bridge exception: %s", e.what());
         }
@@ -43,6 +46,8 @@ private:
 
     rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr image_subscriber_;
     rclcpp::TimerBase::SharedPtr timer_;
+
+    
 };
 
 int main(int argc, char** argv) {
