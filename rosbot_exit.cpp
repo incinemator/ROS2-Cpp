@@ -12,6 +12,7 @@ class RosbotGetOut {
         RosbotGetOut();
         void recenter();
         void navigate();
+    private:
 
         RosbotClass rosbot;
 };
