@@ -15,7 +15,7 @@ public:
 
 private:
     void lidarCallback(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
-        // SLAM-based navigation logic here
+        // SLAM
         // Example: Stop the robot if an obstacle is detected in front
         if (isObstacleInFront(msg)) {
             geometry_msgs::msg::Twist cmd_vel;
