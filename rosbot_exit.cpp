@@ -23,3 +23,8 @@ int main(int argc, char **argv)
     ros::init(arc, argv, "rosbot_node");
     return 0;
 }
+
+void RosbotGetOut::navigate()
+{
+    
+}
