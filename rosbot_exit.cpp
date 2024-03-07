@@ -11,10 +11,10 @@ class RosbotGetOut {
     public:
         RosbotGetOut();
         ~RosbotGetOut();
+        void set_speed(float in_speed);
         void recenter();
         void navigate();
     private:
-
         RosbotClass rosbot;
 };
 
