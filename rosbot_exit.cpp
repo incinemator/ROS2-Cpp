@@ -9,7 +9,7 @@ using namespace std;
 
 class RosbotGetOut {
     public:
-        RosbotGetOut();
+        RosbotGetOut(float speed);
         ~RosbotGetOut();
         void set_speed(float in_speed);
         void recenter();
@@ -26,9 +26,9 @@ int main(int argc, char **argv)
 
 void RosbotGetOut::navigate()
 {
-    rosbot.move_forward();
+    rosbot.move_forward(speed);
 
     while(rosbot.get_laser(0) < 1.75) {
-        
+
     }
 }
