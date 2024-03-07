@@ -26,5 +26,9 @@ int main(int argc, char **argv)
 
 void RosbotGetOut::navigate()
 {
-    rosbot.move_forward()
+    rosbot.move_forward();
+
+    while(rosbot.get_laser(0) < 1.75) {
+        
+    }
 }
