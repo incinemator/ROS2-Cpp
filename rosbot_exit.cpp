@@ -26,5 +26,5 @@ int main(int argc, char **argv)
 
 void RosbotGetOut::navigate()
 {
-    
+    rosbot.move_forward()
 }
