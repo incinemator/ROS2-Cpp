@@ -20,5 +20,5 @@ Humble
    ```bash
    git clone <repository_url> src/ros2_navigation
 ## Usage
-- 1 source /opt/ros/humble/setup.bash
-- 2 ros2 run turtlebot3_navigation turtlebot3_navigation
+1. source /opt/ros/humble/setup.bash
+2.  ros2 run <package_name> <package_name>
