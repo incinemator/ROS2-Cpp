@@ -4,6 +4,8 @@ Autonomous navigation algorithms for mobile robotic platforms equipped with RGBD
 ### `jackal_vslam`
 ### `orb_vslam_ros`
 ### `turtlebot_lidar_slam1`
+### ROS2 Version
+Humble
 #### Dependencies
 
 - `rclcpp`: ROS2 C++ client library.
@@ -17,3 +19,6 @@ Autonomous navigation algorithms for mobile robotic platforms equipped with RGBD
 
    ```bash
    git clone <repository_url> src/ros2_navigation
+## Usage
+source /opt/ros/humble/setup.bash
+ros2 run turtlebot3_navigation turtlebot3_navigation
